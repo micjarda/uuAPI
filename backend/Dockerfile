@@ -5,7 +5,7 @@ ENV BACKEND_PORT=7070
 ENV BACKEND_IP_ADDRESS=localhost
 ENV HOST_PORT=5173
 ENV HOST_IP_ADDRESS=localhost
-ENV MONGO_URI=mongodb://localhost:5050/shop
+ENV MONGO_URI=mongodb+srv://student:Student123@uushop.seneubx.mongodb.net/?retryWrites=true&w=majority
 
 WORKDIR /app
 
