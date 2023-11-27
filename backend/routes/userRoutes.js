@@ -1,9 +1,10 @@
 const express = require("express");
+const { verifyToken } = require('../middleware/auth');
 const router = express.Router();
 const userController = require("../controllers/user");
 
 // Vytvoření nového uživatele
-router.post("/create", async (req, res) => {
+router.post("/create", verifyToken, async (req, res) => {
   try {
     const { username, userpassword } = req.body;
     const newUser = await userController.createUser(username, userpassword);
@@ -14,7 +15,7 @@ router.post("/create", async (req, res) => {
 });
 
 // Získání všech uživatelů
-router.get("/", async (req, res) => {
+router.get("/", verifyToken, async (req, res) => {
   try {
     const users = await userController.getAllUsers();
     res.status(200).json(users);
@@ -24,7 +25,7 @@ router.get("/", async (req, res) => {
 });
 
 // Úprava uživatele
-router.put("/:id/edit", async (req, res) => {
+router.put("/:id/edit", verifyToken, async (req, res) => {
   try {
     const userId = req.params.id;
     const { username, userpassword } = req.body;
@@ -36,11 +37,11 @@ router.put("/:id/edit", async (req, res) => {
 });
 
 // Smazání uživatele
-router.delete("/:id/delete", async (req, res) => {
+router.delete("/:id/delete", verifyToken, async (req, res) => {
   try {
     const userId = req.params.id;
     await userController.deleteUser(userId);
-    res.status(204).json();
+    res.status(204).json({succes: "Uživatel byl úspěšně smazán"});
   } catch (error) {
     res.status(500).json({ error: "Nastala chyba při mazání uživatele." });
   }

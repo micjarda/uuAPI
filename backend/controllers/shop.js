@@ -59,9 +59,8 @@ exports.updateItem = async (req, res) => {
 };
 
 exports.deleteItem = async (req, res) => {
+  const { id } = req.params;
   if(checkForHexRegExp.test(id)) {
-      const { id } = req.params;
-
       const item = await ShopItemSchema.findOneAndDelete({ _id: id });
 
       if (!item) {
