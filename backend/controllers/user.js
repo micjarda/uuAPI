@@ -45,4 +45,3 @@ const deleteUser = async (userId) => {
 };
 
 module.exports = { createUser, getAllUsers, updateUser, deleteUser };
-

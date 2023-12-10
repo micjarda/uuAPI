@@ -3,9 +3,13 @@ const mongoose = require("mongoose");
 const ShopItemSchema = new mongoose.Schema(
   {
     name: String,
+    owner: String,
     image: String,
     description: String,
-    price: String,
+    members: Array,
+    items: Array,
+    category: String,
+    archived: Boolean,
   },
   {
     timestamps: true,

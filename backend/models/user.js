@@ -8,7 +8,7 @@ const UserSchema = new mongoose.Schema(
     userpassword: String,
     profilepicture: String,
     tier: String,
-    disk: String
+    disk: String,
   },
   {
     timestamps: true,
@@ -24,7 +24,10 @@ UserSchema.pre("save", async function (next) {
 
   try {
     const saltRounds = 10; // Počet iterací pro vytvoření soli
-    const hashedPassword = await bcrypt.hash(this.userpassword, saltRounds);
+    const hashedPassword = await bcrypt.hash(
+      this.userpassword,
+      saltRounds
+    );
     this.userpassword = hashedPassword;
     next();
   } catch (error) {
@@ -41,7 +44,10 @@ UserSchema.pre("findOneAndUpdate", async function (next) {
 
   try {
     const saltRounds = 10; // Počet iterací pro vytvoření soli
-    const hashedPassword = await bcrypt.hash(update.userpassword, saltRounds);
+    const hashedPassword = await bcrypt.hash(
+      update.userpassword,
+      saltRounds
+    );
     update.userpassword = hashedPassword;
     next();
   } catch (error) {
@@ -49,7 +55,7 @@ UserSchema.pre("findOneAndUpdate", async function (next) {
   }
 });
 
-UserSchema.methods.comparePassword = async function(candidatePassword) {
+UserSchema.methods.comparePassword = async function (candidatePassword) {
   try {
     return await bcrypt.compare(candidatePassword, this.userpassword);
   } catch (error) {

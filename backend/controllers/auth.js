@@ -22,12 +22,16 @@ exports.login = async (req, res) => {
     const isPasswordValid = await user.comparePassword(password);
 
     if (isPasswordValid) {
-      const acssestoken = jwt.sign({ name: username }, process.env.ACSSES_TOKEN_SECRET, {
-        expiresIn: "300s",
-      });
+      const acssestoken = jwt.sign(
+        { name: username },
+        process.env.ACSSES_TOKEN_SECRET,
+        {
+          expiresIn: "600s", //10 minut
+        }
+      );
       res.status(200).json({
         username: username,
-        token: acssestoken
+        token: acssestoken,
       });
     } else {
       res.status(401).json({
@@ -42,16 +46,12 @@ exports.login = async (req, res) => {
   }
 };
 
-exports.logout = async (req, res) => {
-  res.status(200).json({status: "logout is not done yet..."})
-}
-
 exports.authenticateToken = (req, res) => {
   const token = req.body.token;
   if (token === null) {
     return res.sendStatus(401);
   }
-  res.status(200).json({ 
-    expiry: (jwt.decode(token, { complete: true }).payload.exp)
+  res.status(200).json({
+    expiry: jwt.decode(token, { complete: true }).payload.exp,
   });
 };
