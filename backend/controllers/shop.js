@@ -1,6 +1,6 @@
 const ShopItemSchema = require("../models/shopItem");
 
-const getAllShopItems = async () => {
+const getAllShopLists = async () => {
   try {
     const shopItems = await ShopItemSchema.find().sort({
       createdAt: -1,
@@ -11,7 +11,7 @@ const getAllShopItems = async () => {
   }
 };
 
-const getShopItem = async (id) => {
+const getShopList = async (id) => {
   try {
     const shopItem = await ShopItemSchema.find({ _id: id }).exec();
     return shopItem;
@@ -20,7 +20,7 @@ const getShopItem = async (id) => {
   }
 };
 
-const createShopItem = async (body) => {
+const createShopList = async (body) => {
   const shopItem = new ShopItemSchema(body);
   try {
     await shopItem.save();
@@ -30,7 +30,7 @@ const createShopItem = async (body) => {
   }
 };
 
-const updateShopItem = async (id, body) => {
+const updateShopList = async (id, body) => {
   try {
     const shopItem = await ShopItemSchema.findOneAndUpdate(
       { _id: id },
@@ -44,7 +44,7 @@ const updateShopItem = async (id, body) => {
   }
 };
 
-const deleteShopItem = async (id) => {
+const deleteShopList = async (id) => {
   try {
     const shopItem = await ShopItemSchema.findOneAndDelete({
       _id: id,
@@ -56,9 +56,9 @@ const deleteShopItem = async (id) => {
 };
 
 module.exports = {
-  getAllShopItems,
-  getShopItem,
-  createShopItem,
-  updateShopItem,
-  deleteShopItem,
+  getAllShopLists,
+  getShopList,
+  createShopList,
+  updateShopList,
+  deleteShopList,
 };

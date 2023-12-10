@@ -7,20 +7,20 @@ const shopControler = require("../controllers/shop");
 
 shopRouter.get("/getalllists", async (req, res) => {
   try {
-    const shopItems = await shopControler.getAllShopItems();
-    res.status(200).json(shopItems);
+    const shopLists = await shopControler.getAllShopLists();
+    res.status(200).json(shopLists);
   } catch {
-    res.status(500).json({ error: "Can't get items." });
+    res.status(500).json({ error: "Can't get lists." });
   }
 });
 
 shopRouter.get("/getlist/:id", validateId, async (req, res) => {
   try {
     const { id } = req.params;
-    const shopItem = await shopControler.getShopItem(id);
-    if (!shopItem || shopItem.length === 0)
-      return res.status(404).json({ error: "No such item." });
-    res.status(200).json(shopItem);
+    const shopList = await shopControler.getShopList(id);
+    if (!shopList || shopList.length === 0)
+      return res.status(404).json({ error: "No such list." });
+    res.status(200).json(shopList);
   } catch (error) {
     return res.status(404).json({ error: error });
   }
@@ -39,7 +39,7 @@ shopRouter.post("/createlist", verifyToken, async (req, res) => {
     archived,
   } = req.body;
   try {
-    const shopItem = await shopControler.createShopItem({
+    const shopList = await shopControler.createShopList({
       name,
       owner,
       image,
@@ -49,7 +49,7 @@ shopRouter.post("/createlist", verifyToken, async (req, res) => {
       category,
       archived,
     });
-    res.status(201).json(shopItem);
+    res.status(201).json(shopList);
   } catch (error) {
     res.status(500).json({ error: "chyba" });
   }
@@ -72,7 +72,7 @@ shopRouter.put(
       archived,
     } = req.body;
     try {
-      const shopItem = await shopControler.updateShopItem(id, {
+      const shopList = await shopControler.updateShopList(id, {
         name,
         owner,
         image,
@@ -82,10 +82,10 @@ shopRouter.put(
         category,
         archived,
       });
-      if (!shopItem) {
-        return res.status(400).json({ error: "No such item" });
+      if (!shopList) {
+        return res.status(400).json({ error: "No such list" });
       }
-      res.status(200).json(shopItem);
+      res.status(200).json(shopList);
     } catch (error) {
       return res.status(400).json({ error: error });
     }
@@ -99,10 +99,10 @@ shopRouter.delete(
   async (req, res) => {
     const { id } = req.params;
     try {
-      const shopItem = await shopControler.deleteShopItem(id);
-      if (!shopItem)
-        return res.status(400).json({ error: "No such item" });
-      res.status(200).json(shopItem);
+      const shopList = await shopControler.deleteShopList(id);
+      if (!shopList)
+        return res.status(400).json({ error: "No such list" });
+      res.status(200).json(shopList);
     } catch (error) {
       return res.status(400).json({ error: error });
     }
