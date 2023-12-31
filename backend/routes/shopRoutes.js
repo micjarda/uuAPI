@@ -27,7 +27,7 @@ shopRouter.get("/getlist/:id", validateId, async (req, res) => {
 });
 
 shopRouter.post("/createlist", verifyToken, async (req, res) => {
-  console.log(req.body)
+  console.log(req.body);
   const {
     name,
     owner,

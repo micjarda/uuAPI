@@ -2,9 +2,7 @@ const ShopItemSchema = require("../models/shopItem");
 
 const getAllShopLists = async () => {
   try {
-    const shopItems = await ShopItemSchema.find().sort({
-      createdAt: -1,
-    });
+    const shopItems = await ShopItemSchema.find();
     return shopItems;
   } catch (error) {
     throw error;
@@ -13,7 +11,7 @@ const getAllShopLists = async () => {
 
 const getShopList = async (id) => {
   try {
-    const shopItem = await ShopItemSchema.find({ _id: id }).exec();
+    const shopItem = await ShopItemSchema.find({ _id: id });
     return shopItem;
   } catch (error) {
     throw error;

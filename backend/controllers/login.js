@@ -4,9 +4,6 @@ const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 
 exports.login = async (req, res) => {
-  console.log("login");
-  console.log(req.body.username, req.body.password);
-
   const username = req.body.username;
   const password = req.body.password;
 
@@ -39,19 +36,8 @@ exports.login = async (req, res) => {
       });
     }
   } catch (error) {
-    console.error(error);
     res.status(500).json({
       message: "An error occurred",
     });
   }
-};
-
-exports.authenticateToken = (req, res) => {
-  const token = req.body.token;
-  if (token === null) {
-    return res.sendStatus(401);
-  }
-  res.status(200).json({
-    expiry: jwt.decode(token, { complete: true }).payload.exp,
-  });
 };
